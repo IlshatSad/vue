@@ -26,16 +26,13 @@ module.exports = {
                 loader: 'vue-loader'
             },
             {
-                test: /\.css$/,
+                test: /\.styl(us)?$/,
                 use: [
                   'vue-style-loader',
-                  {
-                    loader: 'css-loader',
-                    options: { importLoaders: 1 }
-                  },
-                  'postcss-loader'
+                  'css-loader',
+                  'stylus-loader'
                 ]
-              },
+            },
             {
                 test: /\.(jpe?g|gif|png|svg|woff|ttf|eot|wav|mp3)$/,
                 loader: 'file-loader'
