@@ -11,6 +11,9 @@ export default {
   name: 'app',
   components: {
     Home
+  },
+  async data() {
+    console.log('this :', await this.$store.dispatch('getHash'));
   }
 }
 </script>
