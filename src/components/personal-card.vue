@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-    <div v-for="item in items" :key="item.id">
-      <md-card md-theme="dark" class="md-primary">
+    <div v-for="item in items" :key="item.id" class="md-card-block">
+      <md-card class="md-card md-theme-demo-dark">
         <md-card-media>
         <img :src="item.photo" :alt="item.name">
         </md-card-media>
@@ -53,5 +53,9 @@
     margin: 4px;
     display: inline-block;
     vertical-align: top;
+  }
+  .md-card-block {
+    display: inline-block;
+    min-height: 400px
   }
 </style>
