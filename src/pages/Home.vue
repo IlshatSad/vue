@@ -14,10 +14,8 @@
 <script>
 import axios from 'axios'
 import PersonalCard from '../components/personal-card.vue';
-import api from '../../files/characters.js';
 import request from '../__data__/api/api.js';
 
-window.api = api
 export default {
   name: 'home',
   components: {
@@ -37,7 +35,6 @@ export default {
   },
   created() {
     let items = this.items
-    let data = api.data.results
     request.getCharacters()
       .then(data => {
         let results = data.data.data.results
