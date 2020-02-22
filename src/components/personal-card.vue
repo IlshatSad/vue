@@ -2,7 +2,7 @@
   <div class="card">
     <div v-for="item in items" :key="item.id" class="md-card-block">
       <md-card class="md-card md-theme-demo-dark">
-        <md-card-media>
+        <md-card-media md-ratio="4:3">
         <img :src="item.photo" :alt="item.name">
         </md-card-media>
 
