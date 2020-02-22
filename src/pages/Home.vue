@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <nav-bar/>
     <div class="head__wrapper">
       <h1>
         <span class="head__headline">Marvel Characters</span>
@@ -14,7 +13,6 @@
 
 <script>
 import axios from 'axios'
-import navBar from '../components/nav-bar.vue';
 import PersonalCard from '../components/personal-card.vue';
 import api from '../../files/characters.js';
 
@@ -22,7 +20,6 @@ window.api = api
 export default {
   name: 'home',
   components: {
-    navBar,
     PersonalCard
   },
   data() {

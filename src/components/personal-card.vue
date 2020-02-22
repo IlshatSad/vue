@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div v-for="item in items" :key="item.id" class="md-card-block">
-      <md-card class="md-card md-theme-demo-dark">
+      <md-card class="md-card">
         <md-card-media md-ratio="4:3">
         <img :src="item.photo" :alt="item.name">
         </md-card-media>
@@ -9,11 +9,10 @@
         <md-card-header>
         <div class="md-title">{{ item.name }}</div>
         </md-card-header>
-
         <md-card-expand>
           <md-card-actions md-alignment="right">
-            <md-button>Learn more</md-button>
-            <md-button class="md-icon-button">
+            <md-button @click="redirect(item.id)">Learn more</md-button>
+            <md-button class="md-icon-button" @click="addFavorite(item.id)">
               <md-icon>bookmark</md-icon>
             </md-button>
             <md-card-expand-trigger>
@@ -36,6 +35,25 @@
     name: 'PersonalCard',
     props: {
       items: Array
+    },
+    data: {
+      
+    },
+    computed: {
+      
+    },
+    methods: {
+      redirect: function (id) {
+        this.$router.push({
+          name: 'Character',
+          params: {
+            id: id
+          }
+        })
+      },
+      addFavorite: function (item) {
+        
+      }
     }
   }
 </script>
