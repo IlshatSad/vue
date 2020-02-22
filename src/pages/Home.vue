@@ -15,6 +15,7 @@
 import axios from 'axios'
 import PersonalCard from '../components/personal-card.vue';
 import api from '../../files/characters.js';
+import request from '../__data__/api/api.js';
 
 window.api = api
 export default {
@@ -28,23 +29,32 @@ export default {
       items: []
     }
   },
+  methods: {
+    req: async function () {
+      let data = await request.getCharacters();
+      console.log('data :', data);
+    }
+  },
   created() {
     let items = this.items
     let data = api.data.results
-    setTimeout(() => {
-      console.log('item :', data);
-      data.forEach(item => {
-        items.push({
-          id: item.id,
-          name: item.name,
-          description: item.description,
-          photo: `${item.thumbnail.path}.${item.thumbnail.extension}`
-        })
+    request.getCharacters()
+      .then(data => {
+        let results = data.data.data.results
+        console.log('data :', results);
+        results.forEach(item => {
+          items.push({
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            photo: `${item.thumbnail.path}.${item.thumbnail.extension}`
+          })
+        });
       });
-    }, 0);
   }
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
+
 </style>
