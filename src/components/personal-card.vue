@@ -7,7 +7,12 @@
         </md-card-media>
 
         <md-card-header>
-        <div class="md-title">{{ item.name }}</div>
+          <div v-if="addTooltip(item.name)" class="md-title">
+            <tooltip :item="getTooltipData(item.name)"/>
+          </div>
+          <div v-else class="md-title">
+            <div>{{ item.name }}</div>
+          </div>
         </md-card-header>
         <md-card-expand>
           <md-card-actions md-alignment="right">
@@ -31,13 +36,14 @@
 </template>
 
 <script>
+  import tooltip from './tooltip.vue';
   export default {
     name: 'PersonalCard',
     props: {
       items: Array
     },
-    data: {
-      
+    components: {
+      tooltip
     },
     computed: {
       
@@ -51,8 +57,18 @@
           }
         })
       },
-      addFavorite: function (item) {
-        
+      addTooltip: function (name) {
+        if (name.match(/\([a-z, A-Z]*\)/)){
+            return true
+        } else {
+            return false
+        }
+      },
+      getTooltipData (name) {
+        return {
+          name: name.split(/\([a-z, A-Z]*\)/)[0],
+          tooltip: name.match(/\([a-z, A-Z]*\)/)[0]
+        }
       }
     }
   }
@@ -60,7 +76,7 @@
 
 <style lang="stylus" scoped>
   .cards {
-    padding: 10px 20px;  
+    padding: 10px 20px;
   }
   .card-expansion {
     height: 480px;
