@@ -1,5 +1,6 @@
 import getHashes from './getHash';
 import axios from 'axios';
+import data from '../../../files/characters'
 
 const BASE_URL = require('../constants/urls').URLS;
 
@@ -10,13 +11,28 @@ const Api = axios.create({
   }
 })
 
+
 export default {
   getCharacters: async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve({data}), 1000)
+    })
+    // let hash = await getHashes()
+    // return Api.get('/v1/public/characters', {
+    //   params: {
+    //     limit: 10,
+    //     offset: 0,
+    //     ts: hash.date,
+    //     apikey: hash.apikey,
+    //     hash: hash.hash
+    //   }
+    // })
+  },
+  search: async function (name) {
     let hash = await getHashes()
     return Api.get('/v1/public/characters', {
       params: {
-        limit: 10,
-        offset: 0,
+        name: name,
         ts: hash.date,
         apikey: hash.apikey,
         hash: hash.hash
