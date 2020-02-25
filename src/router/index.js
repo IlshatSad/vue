@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Character from '../pages/Character.vue';
 import Favorites from '../pages/Favorites.vue';
+import signUp from '../pages/signUp.vue';
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/Favorites',
     name: 'Favorites',
     component: Favorites
+  },
+  {
+    path: '/signUp',
+    name: 'signUp',
+    component: signUp
   }
 ]
 

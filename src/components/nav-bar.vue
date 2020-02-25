@@ -6,8 +6,8 @@
       <md-button to="/Favorites">Favorites</md-button>
 
       <div class="md-toolbar-section-end">
-          <md-button to="/Login">sign in</md-button>
-          <md-button to="/Logout">sign up</md-button>
+          <md-button to="/signIn">sign in</md-button>
+          <md-button to="/signUp">sign up</md-button>
         </div>
     
     </md-toolbar>
