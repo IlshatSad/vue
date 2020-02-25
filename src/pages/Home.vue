@@ -5,14 +5,49 @@
         <span class="head__headline">Marvel Characters</span>
       </h1>
     </div>
-    <div v-if="items.length != 0" class="cards">
+    <div class="search_block">
+      <md-toolbar class="md-accent">
+        <div class="md-toolbar-row">
+        <div class="md-toolbar-section-start">
+          
+        </div>
+
+        <md-autocomplete
+          class="search"
+          v-model="searchVal"
+          :md-options="employees"
+          md-layout="box"
+          @keyup="setSearchVal">
+          <label>Search...</label>
+        </md-autocomplete>
+
+        <div class="md-toolbar-section-end search-icon">
+          <md-button @click="refresh" class="md-icon-button">
+            <md-icon>refresh</md-icon>
+          </md-button>
+          <md-button @click="searchCharacter" class="md-icon-button">
+            <md-icon>search</md-icon>
+          </md-button>
+        </div>
+        </div>
+      </md-toolbar>
+    </div>
+    
+    <div v-if="items.length == 0 && notFound" class="cards">
+      <div class="cards_notfound">
+        <h2>no matches found</h2>
+      </div>
+    </div>
+    <div v-else-if="items.length != 0">
       <personal-card :items="items"/>
+    </div>
+    <div v-else class="cards_loader">
+      <md-progress-spinner class="md-accent" md-mode="indeterminate" md-stroke="4"></md-progress-spinner>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import PersonalCard from '../components/personal-card.vue';
 import request from '../__data__/api/api.js';
 
@@ -23,14 +58,44 @@ export default {
   },
   data() {
     return {
-      text: 'Идет загрузка...',
-      items: []
+      items: [],
+      notFound: false,
+      countries: [],
+      searchVal: null,
+      employees: []
     }
   },
   methods: {
-    req: async function () {
-      let data = await request.getCharacters();
-      console.log('data :', data);
+    refresh: function () {
+      let items = this.items
+      this.searchVal = null
+      request.getCharacters()
+        .then(data => {
+          console.log('data :', data.data.data.results);
+          let results = data.data.data.results
+          results.forEach(item => {
+            items.push(item)
+          })
+        })
+    },
+    searchCharacter: function () {
+      const { searchVal } = this
+      if (searchVal != null) {
+        request.search(searchVal)
+          .then(response => {
+            if (response.data.data.results.length == 0) {
+              this.items = []
+              this.notFound = true
+            } else {
+              this.items = response.data.data.results
+            }
+          })
+      } else {
+        
+      }
+    },
+    setSearchVal: function (e) {
+      this.searchVal = e.target.value
     }
   },
   created() {
@@ -38,16 +103,10 @@ export default {
     request.getCharacters()
       .then(data => {
         let results = data.data.data.results
-        console.log('data :', results);
         results.forEach(item => {
-          items.push({
-            id: item.id,
-            name: item.name,
-            description: item.description,
-            photo: `${item.thumbnail.path}.${item.thumbnail.extension}`
-          })
-        });
-      });
+          items.push(item)
+        })
+      })
   }
 }
 </script>

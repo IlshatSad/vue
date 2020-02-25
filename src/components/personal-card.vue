@@ -3,7 +3,7 @@
     <div v-for="item in items" :key="item.id" class="md-card-block">
       <md-card class="md-card">
         <md-card-media md-ratio="4:3">
-        <img :src="item.photo" :alt="item.name">
+        <img :src="`${item.thumbnail.path}.${item.thumbnail.extension}`" :alt="item.name">
         </md-card-media>
 
         <md-card-header>
