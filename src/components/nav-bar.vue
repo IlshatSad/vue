@@ -1,21 +1,22 @@
 <template>
   <div class="page-container">
-      <md-app md-waterfall md-mode="fixed-last">
-        <md-app-toolbar class="md-small md-dense md-accent">
-          <div class="md-toolbar-row">
-            <md-tabs class="md-accent" md-alignment="right">
-              <md-tab id="tab-home" to="/" md-label="Home" exact></md-tab>
-              <md-tab id="tab-test" to="/Comics " md-label="Comics" md-disabled></md-tab>
-              <md-tab id="tab-favorites" to="/Favorites" md-label="Favorites"></md-tab>
-              <!-- <md-tab id="tab-posts" md-label="Posts" md-disabled></md-tab> -->
-            </md-tabs>
-          </div>
-        </md-app-toolbar>
+    <md-toolbar class="md-accent md-dense" md-elevation="1">
+      <md-button to="/">Home</md-button>
+      <md-button to="/Comics">Comics</md-button>
+      <md-button to="/Favorites">Favorites</md-button>
 
-        <md-app-content>
-          <router-view/>
-        </md-app-content>
-      </md-app>
+      <div class="md-toolbar-section-end">
+          <md-button to="/Login">sign in</md-button>
+          <md-button to="/Logout">sign up</md-button>
+        </div>
+    
+    </md-toolbar>
+
+    <md-app md-waterfall md-mode="fixed-last">
+      <md-app-content>
+        <router-view/>
+      </md-app-content>
+    </md-app>
     </div>
 </template>
 
