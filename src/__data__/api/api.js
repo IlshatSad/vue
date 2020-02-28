@@ -26,19 +26,10 @@ export default {
       }
     })
   },
-  getComics: async function () {
-    let hash = await getHashes()
-    return Api.get()
+  getComics: async function (params) {
+    return Api.get('/v1/public/comics', { params })
   },
-  search: async function (name) {
-    let hash = await getHashes()
-    return Api.get('/v1/public/characters', {
-      params: {
-        name: name,
-        ts: hash.date,
-        apikey: hash.apikey,
-        hash: hash.hash
-      }
-    })
+  search: async function (params) {
+    return Api.get('/v1/public/characters', { params })
   }
 }

@@ -79,7 +79,9 @@ export default {
     searchCharacter: function () {
       const { searchVal } = this
       if (searchVal != null) {
-        request.search(searchVal)
+        let hash = this.getHashes()
+        let params = Object.assign({}, hash, { name: searchVal })
+        request.search(params)
           .then(response => {
             if (response.data.data.results.length == 0) {
               this.items = []
