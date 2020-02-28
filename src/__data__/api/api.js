@@ -1,4 +1,3 @@
-import getHashes from './getHash';
 import axios from 'axios';
 import data from '../../../files/characters'
 
@@ -13,20 +12,23 @@ const Api = axios.create({
 
 
 export default {
-  getCharacters: async () => {
-    return new Promise((resolve, reject) => {
+  getCharacters: async ({ limit, offset, ts, apikey, hash }) => {
+    /* return new Promise((resolve, reject) => {
       setTimeout(() => resolve({data}), 1000)
+    }) */
+    return Api.get('/v1/public/characters', {
+      params: {
+        limit: limit,
+        offset: offset,
+        ts: ts,
+        apikey: apikey,
+        hash: hash
+      }
     })
-    // let hash = await getHashes()
-    // return Api.get('/v1/public/characters', {
-    //   params: {
-    //     limit: 10,
-    //     offset: 0,
-    //     ts: hash.date,
-    //     apikey: hash.apikey,
-    //     hash: hash.hash
-    //   }
-    // })
+  },
+  getComics: async function () {
+    let hash = await getHashes()
+    return Api.get()
   },
   search: async function (name) {
     let hash = await getHashes()

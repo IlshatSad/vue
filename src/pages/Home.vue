@@ -73,16 +73,8 @@ export default {
   },
   methods: {
     refresh: function () {
-      let items = this.items
       this.searchVal = null
-      request.getCharacters()
-        .then(data => {
-          console.log('data :', data.data.data.results);
-          let results = data.data.data.results
-          results.forEach(item => {
-            items.push(item)
-          })
-        })
+      this.getData()
     },
     searchCharacter: function () {
       const { searchVal } = this
@@ -103,11 +95,14 @@ export default {
     setSearchVal: function (e) {
       this.searchVal = e.target.value
     },
+    getHashes: function() {
+      return this.$store.getters['getHash/getHashes']
+    },
     getData: function () {
       this.items = []
-      request.getCharacters({ limit: this.limit, offset: this.offset })
+      let hash = this.getHashes()
+      request.getCharacters({ limit: this.limit, offset: this.offset, ts: hash.ts, apikey: hash.apikey, hash: hash.hash })
         .then(data => {
-          console.log('data :', data);
           let results = data.data.data.results
           results.forEach(item => {
             this.items.push(item)
@@ -134,7 +129,7 @@ export default {
       }
     }
   },
-  created() {
+  created: async function() {
     this.getData()
   }
 }
