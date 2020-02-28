@@ -40,6 +40,8 @@
     </div>
     <div v-else-if="items.length != 0">
       <personal-card :items="items"/>
+      <md-button class="md-raised md-accent" @click="prevPage" :disabled="pageNumber==0">Previous</md-button>
+      <md-button class="md-raised md-accent" @click="nextPage" :disabled="pageCount">Next</md-button>
     </div>
     <div v-else class="cards_loader">
       <md-progress-spinner class="md-accent" md-mode="indeterminate" md-stroke="4"></md-progress-spinner>
@@ -59,6 +61,10 @@ export default {
   data() {
     return {
       items: [],
+      pageNumber: 0,
+      limit: 20,
+      offset: 0,
+      total: 0,
       notFound: false,
       countries: [],
       searchVal: null,
@@ -91,22 +97,45 @@ export default {
             }
           })
       } else {
-        
+        return;
       }
     },
     setSearchVal: function (e) {
       this.searchVal = e.target.value
+    },
+    getData: function () {
+      this.items = []
+      request.getCharacters({ limit: this.limit, offset: this.offset })
+        .then(data => {
+          console.log('data :', data);
+          let results = data.data.data.results
+          results.forEach(item => {
+            this.items.push(item)
+          })
+        })
+    },
+    nextPage(){
+      this.pageNumber++;
+      this.offset += 21;
+      this.getData()
+    },
+    prevPage(){
+      this.pageNumber--;
+      this.offset -= 21;
+      this.getData()
+    }
+  },
+  computed: {
+    pageCount(){
+      if (this.items.length < 20) {
+        return true
+      } else {
+        return false
+      }
     }
   },
   created() {
-    let items = this.items
-    request.getCharacters()
-      .then(data => {
-        let results = data.data.data.results
-        results.forEach(item => {
-          items.push(item)
-        })
-      })
+    this.getData()
   }
 }
 </script>
