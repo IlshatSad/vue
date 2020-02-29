@@ -17,7 +17,7 @@
         <md-card-expand>
           <md-card-actions md-alignment="right">
             <md-button @click="redirect(item.id)">Learn more</md-button>
-            <md-button class="md-icon-button" @click="addFavorite(item.id)">
+            <md-button class="md-icon-button" :class="{ 'md-accent': checkFavorite(item.id) }" @click="addFavorite(item)">
               <md-icon>bookmark</md-icon>
             </md-button>
             <md-card-expand-trigger>
@@ -37,6 +37,7 @@
 
 <script>
   import tooltip from './tooltip.vue';
+  import { mapState, mapMutations, mapGetters } from 'vuex';
   export default {
     name: 'PersonalCard',
     props: {
@@ -46,9 +47,11 @@
       tooltip
     },
     computed: {
-      
+      ...mapGetters('favorite', ['getAllFavorites'])
     },
     methods: {
+      ...mapMutations('favorite', ['set']),
+      ...mapState('favorite', ['favoriteItems']),
       redirect: function (id) {
         this.$router.push({
           name: 'Character',
@@ -68,6 +71,18 @@
         return {
           name: name.split(/\([a-z, A-Z]*\)/)[0],
           tooltip: name.match(/\([a-z, A-Z]*\)/)[0]
+        }
+      },
+      addFavorite(item) {
+        this.set(item)
+      },
+      checkFavorite (id) {
+        let items = this.getAllFavorites
+        let index = items.findIndex(item => item.id === id)
+        if (index === -1) {
+          return false
+        } else {
+          return true
         }
       }
     }
