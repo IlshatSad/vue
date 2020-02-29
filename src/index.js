@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueMaterial from 'vue-material'
 
-import store from './__data__/store';
+import { store } from './__data__/store';
 
 import App from './App.vue'
 import router from './router'

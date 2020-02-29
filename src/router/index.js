@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Character from '../pages/Character.vue';
+import Comics from '../pages/Comics.vue';
 import Favorites from '../pages/Favorites.vue';
 import signUp from '../pages/signUp.vue';
 
@@ -22,6 +23,11 @@ const routes = [
     path: '/Favorites',
     name: 'Favorites',
     component: Favorites
+  },
+  {
+    path: '/Comics',
+    name: 'Comics',
+    component: Comics
   },
   {
     path: '/signUp',

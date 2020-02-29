@@ -50,7 +50,7 @@
       ...mapGetters('favorite', ['getAllFavorites'])
     },
     methods: {
-      ...mapMutations('favorite', ['set', 'delete']),
+      ...mapMutations('favorite', ['set', 'deleteFavorite']),
       ...mapState('favorite', ['favoriteItems']),
       redirect: function (id) {
         this.$router.push({
@@ -75,7 +75,7 @@
       },
       addFavorite(item) {
         if (this.checkFavorite(item.id)) {
-          this.delete(item)
+          this.deleteFavorite(item)
         } else {
           this.set(item)
         }

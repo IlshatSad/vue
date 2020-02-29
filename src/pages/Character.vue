@@ -7,6 +7,7 @@
 </style>
 
 <script>
+import character from '../../files/character';
 export default {
   name: 'Character',
   props: {
@@ -16,6 +17,7 @@ export default {
   },
   created(){
     console.log('this :', this);
+    console.log('character :', character);
   },
   computed: {
 
