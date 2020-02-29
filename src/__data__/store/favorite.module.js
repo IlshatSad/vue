@@ -14,6 +14,12 @@ const mutations = {
     } else {
       state.favoriteItems[index] = item
     }
+  },
+  delete(state, item) {
+    let index = state.favoriteItems.findIndex(o => o.id === item.id)
+    if (index > -1) {
+      state.favoriteItems.splice(index, 1)
+    }
   }
 }
 
