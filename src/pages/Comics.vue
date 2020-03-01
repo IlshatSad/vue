@@ -1,7 +1,48 @@
 <template>
   <div class="comics_page">
     <h1>Comics</h1>
-    <comicsCard :items="items"/>
+    <div class="comics_page_selectors">
+      <div class="md-layout md-gutter">
+        <div class="md-layout-item">
+          <md-field>
+            <label for="format">Format</label>
+            <md-select v-model="format" name="format" id="format">
+              <md-option value="comic">Comic</md-option>
+              <md-option value="magazine">Magazine</md-option>
+              <md-option value="trade paperback">Trade paperback</md-option>
+              <md-option value="hardcover">Hardcover</md-option>
+            </md-select>
+          </md-field>
+        </div>
+        <div class="md-layout-item">
+          <md-field>
+            <md-select v-model="formatType" name="formatType" id="formatType" placeholder="Comics Format">
+              <md-option value="comic">Comic</md-option>
+              <md-option value="collection">Collection</md-option>
+            </md-select>
+          </md-field>
+        </div>
+        <div class="md-layout-item">
+          <md-field>
+            <md-select v-model="dateDescriptor" name="dateDescriptor" id="dateDescriptor" placeholder="Date range">
+              <md-option value="lastWeek">last week</md-option>
+              <md-option value="thisWeek">this week</md-option>
+              <md-option value="nextWeek">next week</md-option>
+              <md-option value="thisMonth">this month</md-option>
+            </md-select>
+          </md-field>
+        </div>
+      </div>
+      <md-button class="md-accent md-raised" @click="selectorSearch">Search</md-button>
+      
+    </div>
+    <div v-if="items.length == 0 && notFound" class="comics_page_notfound">
+      <h2>Ooops</h2>
+    </div>
+    <div v-else class="comics_page_cards">
+      <comicsCard :items="items"/>
+    </div>
+    <md-button class="md-accent md-raised" @click="showMore" :disabled="disableShowMoreBtn">Show more</md-button>
   </div>
 </template>
 
@@ -16,7 +57,14 @@ export default {
   },
   data: function () {
     return {
-      items: []
+      items: [],
+      format: null,
+      formatType: null,
+      dateDescriptor: null,
+      limit: 10,
+      offset: 0,
+      notFound: false,
+      disableShowMoreBtn: false
     }
   },
   methods: {
@@ -29,7 +77,6 @@ export default {
       const params = Object.assign({}, hash, parameters)
       api.getComics(params)
         .then(data => {
-          console.log('data :', data)
           this.items = data.data.data.results
         })
     },
@@ -40,6 +87,31 @@ export default {
       api.getComics(params)
         .then(data => {
           this.items = data.data.data.results
+        })
+    },
+    selectorSearch() {
+      this.hash = this.getHashes()
+      this.params = {
+        dateDescriptor: this.dateDescriptor,
+        formatType: this.formatType,
+        format: this.format,
+        limit: this.limit,
+        offset: this.offset
+      }
+      let allParams = Object.assign({}, this.hash, this.params)
+      api.getComics(allParams)
+        .then(data => {
+          this.items = data.data.data.results
+          if (this.items.length === 0) this.notFound = true
+        })
+    },
+    showMore() {
+      this.params.offset += 21 
+      let params = Object.assign({}, this.hash, this.params)
+      api.getComics(params)
+        .then(data => {
+          this.items = [...this.items, ...data.data.data.results]
+          if (this.items.length === 0) this.disableShowMoreBtn = true
         })
     }
   },
