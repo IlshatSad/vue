@@ -10,7 +10,7 @@
       </md-card>
       <div class="comics_description">
         <h5 class="comics_name">{{ item.title }}</h5>
-        <p class="comics_creator">{{ item.creators.items[0]['name'] }}</p>
+        <p v-if="item.creators.items.length > 0" class="comics_creator">{{ item.creators.items[0]['name'] }}</p>
       </div>
     </div>
   </div>
