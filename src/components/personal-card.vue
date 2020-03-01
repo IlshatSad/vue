@@ -16,7 +16,7 @@
         </md-card-header>
         <md-card-expand>
           <md-card-actions md-alignment="right">
-            <md-button @click="redirect(item.id)">Learn more</md-button>
+            <md-button :to="{ path: `/Character/${item.id}` }">Learn more</md-button>
             <md-button class="md-icon-button" :class="{ 'md-accent': checkFavorite(item.id) }" @click="addFavorite(item)">
               <md-icon>bookmark</md-icon>
             </md-button>
@@ -52,14 +52,6 @@
     methods: {
       ...mapMutations('favorite', ['set', 'deleteFavorite']),
       ...mapState('favorite', ['favoriteItems']),
-      redirect: function (id) {
-        this.$router.push({
-          name: 'Character',
-          params: {
-            id: id
-          }
-        })
-      },
       addTooltip: function (name) {
         if (name.match(/\([a-z, A-Z]*\)/)){
             return true

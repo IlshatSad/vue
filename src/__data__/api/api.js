@@ -26,6 +26,17 @@ export default {
       }
     })
   },
+  getCharacter: function ({ id, params }) {
+    // GET /v1/public/characters/{characterId}
+    return Api.get(`/v1/public/characters/${id}`, {
+      params
+    })
+  },
+  getWhatever: function ({ url, params }) {
+    return Api.get(url, {
+      params
+    })
+  },
   getComics: async function (params) {
     return Api.get('/v1/public/comics', { params })
   },

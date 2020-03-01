@@ -5,10 +5,10 @@
       <md-button to="/Comics">Comics</md-button>
       <md-button to="/Favorites">Favorites</md-button>
 
-      <div class="md-toolbar-section-end">
+      <!-- <div class="md-toolbar-section-end">
           <md-button to="/signIn">sign in</md-button>
           <md-button to="/signUp">sign up</md-button>
-        </div>
+        </div> -->
     
     </md-toolbar>
 

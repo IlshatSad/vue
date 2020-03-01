@@ -14,7 +14,7 @@ const routes = [
     component: () => import('../pages/Home.vue')  
   },
   {
-    path: '/character/:id',
+    path: '/Character/:id',
     name: 'Character',
     component: Character,
     props: true
