@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h1>Hello1</h1>
-    <button @click="getData">click</button>
+  <div class="comics_page">
+    <h1>Comics</h1>
     <comicsCard :items="items"/>
   </div>
 </template>
